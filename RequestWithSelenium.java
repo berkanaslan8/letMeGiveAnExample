@@ -1,12 +1,10 @@
 import java.util.ArrayList;
 import java.util.List;
 import org.openqa.selenium.By;
-import org.openqa.selenium.By.ByTagName;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -17,14 +15,6 @@ public class RequestWithSelenium {
 	public List<String> errorMsgs;
 	public List<String> errorSites;
 	public WebDriverWait waitBody;
-	public String title = "";
-	public void waitFor(int milis) {
-		try {
-			Thread.sleep(2000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
 	
 	
 	public RequestWithSelenium() {
@@ -67,14 +57,14 @@ public class RequestWithSelenium {
         errorMsgs.add("Page not found");
         errorMsgs.add("404 Not Found");
         errorMsgs.add("Something went wrong");
-        errorMsgs.add("sitemiz bakým aþamasýndadýr");
+        errorMsgs.add("sitemiz bakÄ±m aÅŸamasÄ±ndadÄ±r");
         errorMsgs.add("bad request");
         errorMsgs.add("Internal Server Error");
         errorMsgs.add("Gateway Timeout");
         errorMsgs.add("buy this domain");
         errorMsgs.add("Run Time Error");
         errorMsgs.add("403 Forbidden");
-        errorMsgs.add("Sayfa bulunamadý");
+        errorMsgs.add("Sayfa bulunamadÄ±");
         errorMsgs.add("There has been a critical error on your website");
         errorMsgs.add("the protection measure has been taken for this website");
         
@@ -85,8 +75,8 @@ public class RequestWithSelenium {
 			driver.get(siteFinder);
 			System.out.println("Selenium has visited " + siteFinder + " succesfully.");
 			bodyCheck = driver.findElement(By.tagName("body")).getText();	
-			title = driver.findElement(By.tagName("h3")).getText();
-			waitFor(2000);
+			WebElement element = waitBody.until(ExpectedConditions.invisibilityOfAllElements(driver.findElement(By.tagName("body"))));
+			
 			for(String errFinder: errorMsgs) {
 				if(bodyCheck.contains(errFinder)) {
 					errorSites.add(siteFinder);
