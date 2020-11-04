@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 
 public class RequestWithSelenium {
@@ -15,6 +16,7 @@ public class RequestWithSelenium {
 	public List<String> errorMsgs;
 	public List<String> errorSites;
 	public WebDriverWait waitBody;
+	public String body;
 	
 	
 	public RequestWithSelenium() {
@@ -75,7 +77,7 @@ public class RequestWithSelenium {
 			driver.get(siteFinder);
 			System.out.println("Selenium has visited " + siteFinder + " succesfully.");
 			bodyCheck = driver.findElement(By.tagName("body")).getText();	
-			WebElement element = waitBody.until(ExpectedConditions.invisibilityOfAllElements(driver.findElement(By.tagName("body"))));
+			body = waitBody.until(ExpectedConditions.elementToBeClickable(By.tagName("body"))).getText();
 			
 			for(String errFinder: errorMsgs) {
 				if(bodyCheck.contains(errFinder)) {
